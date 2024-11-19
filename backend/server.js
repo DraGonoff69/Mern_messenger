@@ -3,19 +3,23 @@ import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import connectToMongo from './db/connectToMongo.js';
+import messagesRoutes from './routes/messageRoutes.js';
+
+import cookieParser from 'cookie-parser';
 
 const app=express();
+dotenv.config();
 const PORT=process.env.PORT || 5000;
 
-dotenv.config();
 
 app.use(express.json()); //to parse the incoming request with JSON payloads (from req.body)
-app.use("/api/auth",authRoutes);
+app.use(cookieParser()); 
 
-app.get('/',(req,res)=>{
-    //root route of the server http://localhost:5000/
-    res.send('Hello World');
-});
+app.use("/api/auth",authRoutes);
+app.use("/api/messages",messagesRoutes);
+
+
+
 
 
 

@@ -1,9 +1,10 @@
 import User from '../models/userModel.js';
+import bcrypt from 'bcryptjs';
 import generateTokenAndSetCookie from '../utils/generateToken.js';
 
 export const signup = async (req, res) => {
     try {
-        const { fullname, username, password, gender } = req.body;
+        const { fullname, username, password,confirmPassword, gender } = req.body;
 
         if (password != confirmPassword) {
             return res.status(400).json({ error: "Password doesn't match" });
@@ -42,7 +43,7 @@ export const signup = async (req, res) => {
         })
 
     } catch (error) {
-        console.log("Error in signup controller ")
+        console.log("Error in signup controller ",error)
         res.status(500).json({ error: "Internal server error" });
     }
 }
